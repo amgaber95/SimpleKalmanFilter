@@ -26,6 +26,26 @@ class SimpleKalmanFilter1D(object):
 
         self._process_noise = process_noise
         self._measurement_noise = measurement_noise
+    
+    @property
+    def process_noise(self):
+        return self._process_noise
+    
+    @process_noise.setter
+    def process_noise(self, value):
+        self._process_noise = value
+        self._Q = np.float64(value)
+        self._kf.Q = self._Q
+    
+    @property
+    def measurement_noise(self):
+        return self._measurement_noise
+
+    @measurement_noise.setter
+    def measurement_noise(self, value):
+        self._measurement_noise = value
+        self._R = np.float64(value)
+        self._kf.R = self._R
 
     def filter(self, measurement):
         self._xk_prior, self._Pk_prior = self._kf.predict(
